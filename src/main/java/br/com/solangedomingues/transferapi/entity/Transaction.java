@@ -1,8 +1,10 @@
 package br.com.solangedomingues.transferapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import br.com.solangedomingues.transferapi.enums.TransactionStatus;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 public class Transaction {
@@ -11,12 +13,28 @@ public class Transaction {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    @JsonIgnore
-    private Customer origin;
+    private Long originAccount;
 
-    private Double balance;
+    private Long destinationAccount;
+
+    private BigDecimal value;
+
+    @Enumerated(EnumType.STRING)
+    private TransactionStatus status;
+
+    private Date date;
+
+    public Transaction(Long id, Long originAccount, Long destinationAccount, BigDecimal value, TransactionStatus status, Date date) {
+        this.id = id;
+        this.originAccount = originAccount;
+        this.destinationAccount = destinationAccount;
+        this.value = value;
+        this.status = status;
+        this.date = date;
+    }
+
+    public Transaction() {
+    }
 
     public Long getId() {
         return id;
@@ -26,19 +44,43 @@ public class Transaction {
         this.id = id;
     }
 
-    public Customer getOrigin() {
-        return origin;
+    public Long getOriginAccount() {
+        return originAccount;
     }
 
-    public void setOrigin(Customer origin) {
-        this.origin = origin;
+    public void setOriginAccount(Long originAccount) {
+        this.originAccount = originAccount;
     }
 
-    public Double getBalance() {
-        return balance;
+    public Long getDestinationAccount() {
+        return destinationAccount;
     }
 
-    public void setBalance(Double balance) {
-        this.balance = balance;
+    public void setDestinationAccount(Long destinationAccount) {
+        this.destinationAccount = destinationAccount;
+    }
+
+    public BigDecimal getValue() {
+        return value;
+    }
+
+    public void setValue(BigDecimal value) {
+        this.value = value;
+    }
+
+    public TransactionStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TransactionStatus status) {
+        this.status = status;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

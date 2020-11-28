@@ -1,6 +1,9 @@
 package br.com.solangedomingues.transferapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
@@ -8,37 +11,33 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "customer_id")
     private Long id;
 
     @Column(unique = true)
-    private Long number;
+    private Long accountNumber;
 
     private String name;
 
-    private Double balance;
+    private BigDecimal balance;
 
-    @OneToMany(mappedBy = "origin")
-    private Set<Transaction> originTransaction;
+//    @OneToMany(mappedBy = "origin")
+//    @JsonIgnore
+//    private Set<Transaction> originTransaction;
+//
+//    @OneToMany(mappedBy = "destination")
+//    @JsonIgnore
+//    private Set<Transaction> destinationTransaction;
 
     public Customer() {
-        super();
     }
 
-    public Customer(Long id, Long number, String name, Double balance) {
+    public Customer(Long id, Long accountNumber, String name, BigDecimal balance) {
         this.id = id;
-        this.number = number;
+        this.accountNumber = accountNumber;
         this.name = name;
         this.balance = balance;
     }
 
-    public Set<Transaction> getOriginTransaction() {
-        return originTransaction;
-    }
-
-    public void setOriginTransaction(Set<Transaction> originTransaction) {
-        this.originTransaction = originTransaction;
-    }
 
     public Long getId() {
         return id;
@@ -48,12 +47,12 @@ public class Customer {
         this.id = id;
     }
 
-    public Long getNumber() {
-        return number;
+    public Long getAccountNumber() {
+        return accountNumber;
     }
 
-    public void setNumber(Long number) {
-        this.number = number;
+    public void setAccountNumber(Long accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public String getName() {
@@ -64,11 +63,11 @@ public class Customer {
         this.name = name;
     }
 
-    public Double getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(Double balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 }
