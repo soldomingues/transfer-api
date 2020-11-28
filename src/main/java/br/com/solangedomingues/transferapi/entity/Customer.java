@@ -1,32 +1,43 @@
 package br.com.solangedomingues.transferapi.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
-public class Client {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "customer_id")
     private Long id;
 
-    private Integer number;
+    @Column(unique = true)
+    private Long number;
+
     private String name;
+
     private Double balance;
 
+    @OneToMany(mappedBy = "origin")
+    private Set<Transaction> originTransaction;
 
-    public Client() {
+    public Customer() {
         super();
     }
 
-    public Client(Long id, Integer number, String name, Double balance) {
-        super();
+    public Customer(Long id, Long number, String name, Double balance) {
         this.id = id;
         this.number = number;
         this.name = name;
         this.balance = balance;
+    }
+
+    public Set<Transaction> getOriginTransaction() {
+        return originTransaction;
+    }
+
+    public void setOriginTransaction(Set<Transaction> originTransaction) {
+        this.originTransaction = originTransaction;
     }
 
     public Long getId() {
@@ -37,11 +48,11 @@ public class Client {
         this.id = id;
     }
 
-    public Integer getNumber() {
+    public Long getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(Long number) {
         this.number = number;
     }
 

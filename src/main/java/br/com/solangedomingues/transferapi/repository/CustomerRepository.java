@@ -1,12 +1,12 @@
 package br.com.solangedomingues.transferapi.repository;
 
-import br.com.solangedomingues.transferapi.entity.Client;
+import br.com.solangedomingues.transferapi.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface ClientRepository extends JpaRepository<Client, Long> {
-    Optional<Client> findByNumber(Integer number);
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
+    Optional<Customer> findByNumber(Long number);
 }
