@@ -1,13 +1,17 @@
 package br.com.solangedomingues.transferapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
-public class Customer {
+public class Customer implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -20,14 +24,6 @@ public class Customer {
 
     private BigDecimal balance;
 
-//    @OneToMany(mappedBy = "origin")
-//    @JsonIgnore
-//    private Set<Transaction> originTransaction;
-//
-//    @OneToMany(mappedBy = "destination")
-//    @JsonIgnore
-//    private Set<Transaction> destinationTransaction;
-
     public Customer() {
     }
 
@@ -37,7 +33,6 @@ public class Customer {
         this.name = name;
         this.balance = balance;
     }
-
 
     public Long getId() {
         return id;
