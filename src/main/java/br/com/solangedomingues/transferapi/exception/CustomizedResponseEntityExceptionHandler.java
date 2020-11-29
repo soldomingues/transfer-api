@@ -51,14 +51,14 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                 new Date(), request.getDescription(false), null)), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(ExceedecTransactionValueException.class)
-    protected ResponseEntity<Object> handleAccountNumberAlreadyRegisteredException(ExceedecTransactionValueException ex, WebRequest request) {
+    @ExceptionHandler(ExceededTransferValueException.class)
+    protected ResponseEntity<Object> handleExceededTransferValueException(ExceededTransferValueException ex, WebRequest request) {
         return new ResponseEntity<>(new ResponseCustomer(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
                 new Date(), request.getDescription(false), null)), HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(NegativeTransactionValueException.class)
-    protected ResponseEntity<Object> handleNegativeTransactionValueException(NegativeTransactionValueException ex, WebRequest request) {
+    @ExceptionHandler(NegativeTransferValueException.class)
+    protected ResponseEntity<Object> handleNegativeTransferValueException(NegativeTransferValueException ex, WebRequest request) {
         return new ResponseEntity<>(new ResponseCustomer(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
                 new Date(), request.getDescription(false), null)), HttpStatus.BAD_REQUEST);
     }

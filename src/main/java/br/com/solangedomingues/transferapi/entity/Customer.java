@@ -65,4 +65,12 @@ public class Customer implements Serializable {
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
+
+    public void subtractBalance(BigDecimal value) {
+        this.balance = this.balance.subtract(value);
+    }
+
+    public void addBalance(BigDecimal value) {
+        this.balance = this.balance.add(value);
+    }
 }

@@ -1,10 +1,10 @@
 package br.com.solangedomingues.transferapi.exception;
 
-public class NegativeTransactionValueException extends RuntimeException {
+public class NegativeTransferValueException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public NegativeTransactionValueException(String message) {
+    public NegativeTransferValueException(String message) {
         super(message);
     }
 }

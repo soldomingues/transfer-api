@@ -1,7 +1,7 @@
 package br.com.solangedomingues.transferapi.controler;
 
 import br.com.solangedomingues.transferapi.entity.Customer;
-import br.com.solangedomingues.transferapi.entity.Transaction;
+import br.com.solangedomingues.transferapi.entity.Transfer;
 import br.com.solangedomingues.transferapi.service.AccountService;
 import br.com.solangedomingues.transferapi.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -65,25 +63,25 @@ public class AccountController {
     }
 
     @PostMapping("/transactions")
-    public ResponseEntity<ResponseTransaction> createTransactions(@RequestBody Transaction transaction) {
+    public ResponseEntity<ResponseTransfer> createTransactions(@RequestBody Transfer transfer) {
 
-        Optional<Transaction> savedTransaction = accountService.saveTransaction(transaction);
+        Optional<Transfer> savedTransaction = accountService.makeTransfer(transfer);
 
         Situation situation = new Situation(HttpStatus.OK.value(), "Success", new Date(), null, null);
 
-        ResponseTransaction response = new ResponseTransaction(savedTransaction, situation);
+        ResponseTransfer response = new ResponseTransfer(savedTransaction, situation);
 
-        return new ResponseEntity<ResponseTransaction>(response, HttpStatus.OK);
+        return new ResponseEntity<ResponseTransfer>(response, HttpStatus.OK);
     }
 
     @GetMapping("/transactions/account/{accountNumber}")
-    public ResponseEntity<ResponseTransactions> retrieveTransactionsByAccountNumber(@PathVariable Long accountNumber) {
-        List<Transaction> transactionsForAccount = accountService.findAllTransactionsByAccount(accountNumber);
+    public ResponseEntity<ResponseTransfers> retrieveTransactionsByAccountNumber(@PathVariable Long accountNumber) {
+        List<Transfer> transactionsForAccount = accountService.findAllTransfersByAccount(accountNumber);
 
         Situation situation = new Situation(HttpStatus.OK.value(), "Success", new Date(), null, null);
 
-        ResponseTransactions response = new ResponseTransactions(transactionsForAccount, situation);
+        ResponseTransfers response = new ResponseTransfers(transactionsForAccount, situation);
 
-        return new ResponseEntity<ResponseTransactions>(response, HttpStatus.OK);
+        return new ResponseEntity<ResponseTransfers>(response, HttpStatus.OK);
     }
 }

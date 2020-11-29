@@ -1,8 +1,7 @@
 package br.com.solangedomingues.transferapi.entity;
 
-import br.com.solangedomingues.transferapi.enums.TransactionStatus;
+import br.com.solangedomingues.transferapi.enums.TransferStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,7 +9,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-public class Transaction implements Serializable {
+public class Transfer implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -25,15 +24,15 @@ public class Transaction implements Serializable {
     private BigDecimal value;
 
     @Enumerated(EnumType.STRING)
-    private TransactionStatus status;
+    private TransferStatus status;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss", timezone = JsonFormat.DEFAULT_TIMEZONE)
     private Date date;
 
-    public Transaction() {
+    public Transfer() {
     }
 
-    public Transaction(Long id, Long originAccount, Long destinationAccount, BigDecimal value, TransactionStatus status, Date date) {
+    public Transfer(Long id, Long originAccount, Long destinationAccount, BigDecimal value, TransferStatus status, Date date) {
         this.id = id;
         this.originAccount = originAccount;
         this.destinationAccount = destinationAccount;
@@ -74,11 +73,11 @@ public class Transaction implements Serializable {
         this.value = value;
     }
 
-    public TransactionStatus getStatus() {
+    public TransferStatus getStatus() {
         return status;
     }
 
-    public void setStatus(TransactionStatus status) {
+    public void setStatus(TransferStatus status) {
         this.status = status;
     }
 
