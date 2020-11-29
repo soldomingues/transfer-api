@@ -54,7 +54,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Optional<Transaction> saveTransaction(Transaction transaction) {
+    public synchronized Optional<Transaction> saveTransaction(Transaction transaction) {
         Customer originCustomer = Optional.of(customerRepository.findByAccountNumber(transaction.getOriginAccount())).get().orElse(null);
         Customer destCustomer = Optional.of(customerRepository.findByAccountNumber(transaction.getDestinationAccount())).get().orElse(null);
 
@@ -94,7 +94,7 @@ public class AccountServiceImpl implements AccountService {
         customerRepository.save(originCustomer);
         customerRepository.save(destCustomer);
 
-        return Optional.ofNullable(transaction);
+        return Optional.of(transaction);
     }
 
     @Override
