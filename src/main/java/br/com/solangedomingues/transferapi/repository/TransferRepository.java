@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface TransferRepository extends JpaRepository<Transfer, Long> {
 
-    @Query("SELECT t FROM Transfer t WHERE t.originAccount = :numberAccount or t.destinationAccount = :numberAccount ORDER BY t.date")
+    @Query("SELECT t FROM Transfer t WHERE t.originAccount = :numberAccount or t.destinationAccount = :numberAccount ORDER BY t.date DESC")
     List<Transfer> findAllByAccount(@Param("numberAccount") Long numberAccount);
 
 }

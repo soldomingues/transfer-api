@@ -1,12 +1,8 @@
 package br.com.solangedomingues.transferapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Set;
 
 @Entity
 public class Customer implements Serializable {
