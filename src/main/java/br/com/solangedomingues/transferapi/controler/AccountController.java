@@ -3,7 +3,7 @@ package br.com.solangedomingues.transferapi.controler;
 import br.com.solangedomingues.transferapi.entity.Customer;
 import br.com.solangedomingues.transferapi.entity.Transfer;
 import br.com.solangedomingues.transferapi.service.AccountService;
-import br.com.solangedomingues.transferapi.vo.*;
+import br.com.solangedomingues.transferapi.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,62 +26,62 @@ public class AccountController {
     }
 
     @PostMapping("/customers")
-    public ResponseEntity<ResponseCustomer> createCustomer(@RequestBody Customer customer) {
+    public ResponseEntity<Response> createCustomer(@RequestBody Customer customer) {
 
         Optional<Customer> savedCustomer = accountService.saveCustomer(customer);
 
         Situation situation = new Situation(HttpStatus.OK.value(), "Success", new Date(), null, null);
 
-        ResponseCustomer response = new ResponseCustomer(savedCustomer, situation);
+        Response response = new Response(savedCustomer, situation);
 
-        return new ResponseEntity<ResponseCustomer>(response, HttpStatus.OK);
+        return new ResponseEntity<Response>(response, HttpStatus.OK);
 
     }
 
     @GetMapping("/customers")
-    public ResponseEntity<ResponseCustomers> retrieveAllCustomers() {
+    public ResponseEntity<Response> retrieveAllCustomers() {
 
         List<Customer> listCostumers = accountService.findAllCostumers();
 
         Situation situation = new Situation(HttpStatus.OK.value(), "Success", new Date(), null, null);
 
-        ResponseCustomers response = new ResponseCustomers(listCostumers, situation);
+        Response response = new Response(listCostumers, situation);
 
-        return new ResponseEntity<ResponseCustomers>(response, HttpStatus.OK);
+        return new ResponseEntity<Response>(response, HttpStatus.OK);
     }
 
     @GetMapping("/customers/account/{accountNumber}")
-    public ResponseEntity<ResponseCustomer> retrieveCustomerByAccountNumber(@PathVariable Long accountNumber, @RequestHeader HttpHeaders headers) {
+    public ResponseEntity<Response> retrieveCustomerByAccountNumber(@PathVariable Long accountNumber, @RequestHeader HttpHeaders headers) {
         Optional<Customer> customer = accountService.findByAccountNumber(accountNumber);
 
         Situation situation = new Situation(HttpStatus.OK.value(), "Success", new Date(), null, null);
 
-        ResponseCustomer response = new ResponseCustomer(customer, situation);
+        Response response = new Response(customer, situation);
 
-        return new ResponseEntity<ResponseCustomer>(response, HttpStatus.OK);
+        return new ResponseEntity<Response>(response, HttpStatus.OK);
 
     }
 
     @PostMapping("/transactions")
-    public ResponseEntity<ResponseTransfer> createTransactions(@RequestBody Transfer transfer) {
+    public ResponseEntity<Response> createTransactions(@RequestBody Transfer transfer) {
 
         Optional<Transfer> savedTransaction = accountService.makeTransfer(transfer);
 
         Situation situation = new Situation(HttpStatus.OK.value(), "Success", new Date(), null, null);
 
-        ResponseTransfer response = new ResponseTransfer(savedTransaction, situation);
+        Response response = new Response(savedTransaction, situation);
 
-        return new ResponseEntity<ResponseTransfer>(response, HttpStatus.OK);
+        return new ResponseEntity<Response>(response, HttpStatus.OK);
     }
 
     @GetMapping("/transactions/account/{accountNumber}")
-    public ResponseEntity<ResponseTransfers> retrieveTransactionsByAccountNumber(@PathVariable Long accountNumber) {
+    public ResponseEntity<Response> retrieveTransactionsByAccountNumber(@PathVariable Long accountNumber) {
         List<Transfer> transactionsForAccount = accountService.findAllTransfersByAccount(accountNumber);
 
         Situation situation = new Situation(HttpStatus.OK.value(), "Success", new Date(), null, null);
 
-        ResponseTransfers response = new ResponseTransfers(transactionsForAccount, situation);
+        Response response = new Response(transactionsForAccount, situation);
 
-        return new ResponseEntity<ResponseTransfers>(response, HttpStatus.OK);
+        return new ResponseEntity<Response>(response, HttpStatus.OK);
     }
 }

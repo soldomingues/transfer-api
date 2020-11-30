@@ -1,7 +1,7 @@
 package br.com.solangedomingues.transferapi.exception;
 
-import br.com.solangedomingues.transferapi.vo.ResponseCustomer;
-import br.com.solangedomingues.transferapi.vo.Situation;
+import br.com.solangedomingues.transferapi.response.Response;
+import br.com.solangedomingues.transferapi.response.Situation;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,46 +20,46 @@ import java.util.Date;
 public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(NotFoundException.class)
-    public final ResponseEntity<ResponseCustomer> handleUserNotFoundException(NotFoundException ex, WebRequest request) {
+    public final ResponseEntity<Response> handleUserNotFoundException(NotFoundException ex, WebRequest request) {
 
-        return new ResponseEntity<>(new ResponseCustomer(new Situation(HttpStatus.NOT_FOUND.value(), ex.getMessage(),
+        return new ResponseEntity<>(new Response(new Situation(HttpStatus.NOT_FOUND.value(), ex.getMessage(),
                 new Date(), request.getDescription(false), null)), HttpStatus.NOT_FOUND);
 
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     protected ResponseEntity<Object> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex, WebRequest request) {
-        return new ResponseEntity<>(new ResponseCustomer(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
+        return new ResponseEntity<>(new Response(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
                 new Date(), request.getDescription(false), null)), HttpStatus.BAD_REQUEST);
     }
 
     @Override
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        return new ResponseEntity<>(new ResponseCustomer(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
+        return new ResponseEntity<>(new Response(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
                 new Date(), request.getDescription(false), null)), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NegativeBalanceException.class)
     protected ResponseEntity<Object> handleNegativeBalanceException(NegativeBalanceException ex, WebRequest request) {
-        return new ResponseEntity<>(new ResponseCustomer(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
+        return new ResponseEntity<>(new Response(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
                 new Date(), request.getDescription(false), null)), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(AccountNumberAlreadyRegisteredException.class)
     protected ResponseEntity<Object> handleAccountNumberAlreadyRegisteredException(AccountNumberAlreadyRegisteredException ex, WebRequest request) {
-        return new ResponseEntity<>(new ResponseCustomer(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
+        return new ResponseEntity<>(new Response(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
                 new Date(), request.getDescription(false), null)), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ExceededTransferValueException.class)
     protected ResponseEntity<Object> handleExceededTransferValueException(ExceededTransferValueException ex, WebRequest request) {
-        return new ResponseEntity<>(new ResponseCustomer(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
+        return new ResponseEntity<>(new Response(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
                 new Date(), request.getDescription(false), null)), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(NegativeTransferValueException.class)
     protected ResponseEntity<Object> handleNegativeTransferValueException(NegativeTransferValueException ex, WebRequest request) {
-        return new ResponseEntity<>(new ResponseCustomer(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
+        return new ResponseEntity<>(new Response(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
                 new Date(), request.getDescription(false), null)), HttpStatus.BAD_REQUEST);
     }
 }

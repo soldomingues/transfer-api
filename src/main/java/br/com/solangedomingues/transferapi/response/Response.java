@@ -1,38 +1,36 @@
-package br.com.solangedomingues.transferapi.vo;
+package br.com.solangedomingues.transferapi.response;
 
-import br.com.solangedomingues.transferapi.entity.Customer;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
-import java.util.Optional;
 
-public class ResponseCustomer implements Serializable {
+public class Response implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Optional<Customer> result;
+    private Object result;
 
      @JsonInclude(JsonInclude.Include.NON_NULL)
     private Situation situation;
 
-    public ResponseCustomer(Situation situation) {
+    public Response(Situation situation) {
         this.situation = situation;
     }
 
-    public ResponseCustomer(Optional<Customer> result, Situation situation) {
+    public Response(Object result, Situation situation) {
         this.result = result;
         this.situation = situation;
     }
 
-    public ResponseCustomer() {
+    public Response() {
     }
 
-    public Optional<Customer> getResult() {
+    public Object getResult() {
         return result;
     }
 
-    public void setResult(Optional<Customer> result) {
+    public void setResult(Object result) {
         this.result = result;
     }
 

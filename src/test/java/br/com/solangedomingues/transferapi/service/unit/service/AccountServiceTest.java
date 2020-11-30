@@ -1,10 +1,11 @@
-package br.com.solangedomingues.transferapi.service;
+package br.com.solangedomingues.transferapi.service.unit.service;
 
 import br.com.solangedomingues.transferapi.entity.Customer;
 import br.com.solangedomingues.transferapi.entity.Transfer;
 import br.com.solangedomingues.transferapi.exception.*;
 import br.com.solangedomingues.transferapi.repository.CustomerRepository;
 import br.com.solangedomingues.transferapi.repository.TransferRepository;
+import br.com.solangedomingues.transferapi.service.AccountServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
