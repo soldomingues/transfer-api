@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 
-import br.com.solangedomingues.transferapi.vo.Response;
+import br.com.solangedomingues.transferapi.response.Response;
 import io.cucumber.messages.internal.com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
 import org.springframework.http.HttpStatus;
