@@ -21,7 +21,7 @@ import static org.mockito.Mockito.*;
 
 
 @SpringBootTest
-public class AccountServiceTest {
+class AccountServiceTest {
 
     @Mock
     CustomerRepository customerRepository;
@@ -33,47 +33,48 @@ public class AccountServiceTest {
     AccountServiceImpl accountService;
 
     @Test
-    public void whenSendNewCustomerWithCorrectDataReturnSavedCustomer(){
+    void whenSendNewCustomerWithCorrectDataReturnSavedCustomer(){
         Customer customer = new Customer(1L, 1001L, "Maria", new BigDecimal(10));
-        Optional<Customer> responseCustomer = accountService.saveCustomer(customer);
+        accountService.saveCustomer(customer);
         verify(customerRepository, times(1)).save(customer);
     }
 
     @Test
-    public void whenCreatingCustomerWithBalanceLessThanZeroReturnNegativeBalanceException(){
+    void whenCreatingCustomerWithBalanceLessThanZeroReturnNegativeBalanceException(){
         Customer customer = new Customer(1L, 1001L, "Maria", new BigDecimal(-1));
         assertThrows(NegativeBalanceException.class, () -> accountService.saveCustomer(customer));
     }
 
     @Test
-    public void whenCreatingCustomerAccountNumberThatAlreadyExistsReturnAccountNumberAlreadyRegisteredException(){
+    void whenCreatingCustomerAccountNumberThatAlreadyExistsReturnAccountNumberAlreadyRegisteredException(){
         Customer customer = new Customer(1L, 1001L, "Maria", new BigDecimal(10));
         when(customerRepository.findByAccountNumber(customer.getAccountNumber())).thenReturn(Optional.of(customer));
         assertThrows(AccountNumberAlreadyRegisteredException.class, () -> accountService.saveCustomer(customer));
     }
 
     @Test
-    public void whenLookingCustomerByAccountNumberThatNotExistReturnNotFoundException(){
+    void whenLookingCustomerByAccountNumberThatNotExistReturnNotFoundException(){
         Customer customer = new Customer(1L, 1001L, "Maria", new BigDecimal(10));
-        assertThrows(NotFoundException.class, () -> accountService.findByAccountNumber(customer.getAccountNumber()));
+        Long accountNumber = customer.getAccountNumber();
+        assertThrows(NotFoundException.class, () -> accountService.findByAccountNumber(accountNumber));
     }
 
     @Test
-    public void whenLookingCustomerByAccountNumberExistingReturnDataCustomer(){
+    void whenLookingCustomerByAccountNumberExistingReturnDataCustomer(){
         Customer customer = new Customer(1L, 1001L, "Maria", new BigDecimal(10));
         when(customerRepository.findByAccountNumber(customer.getAccountNumber())).thenReturn(Optional.of(customer));
-        Optional<Customer> responseCustomer = accountService.findByAccountNumber(customer.getAccountNumber());
+        accountService.findByAccountNumber(customer.getAccountNumber());
         verify(customerRepository, times(1)).findByAccountNumber(customer.getAccountNumber());
     }
 
     @Test
-    public void whenFindAllCustomerReturnListAllCustomers(){
-        List<Customer> listCustomer = accountService.findAllCostumers();
+    void whenFindAllCustomerReturnListAllCustomers(){
+        accountService.findAllCostumers();
         verify(customerRepository, times(1)).findAll();
     }
 
     @Test
-    public void whenTransferringValidateThatTheBalanceOfTheOriginAccountIsSufficientReturnNegativeBalanceException(){
+    void whenTransferringValidateThatTheBalanceOfTheOriginAccountIsSufficientReturnNegativeBalanceException(){
         Customer originCustomer = new Customer(1L, 1001L, "Maria", new BigDecimal(10));
         Customer destCustomer = new Customer(2L, 1002L, "Pedro", new BigDecimal(100));
 
@@ -87,7 +88,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void whenTransferringValidateIfTheAccountNumberExistsReturnNotFoundException(){
+    void whenTransferringValidateIfTheAccountNumberExistsReturnNotFoundException(){
         Transfer transfer = new Transfer(null,1001L, 1007L, new BigDecimal(20), null, null);
 
         assertThrows(NotFoundException.class, () -> accountService.makeTransfer(transfer));
@@ -95,7 +96,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void whenTransferringValidateIfExceededTransferValueReturnExceededTransferValueException(){
+    void whenTransferringValidateIfExceededTransferValueReturnExceededTransferValueException(){
         Customer originCustomer = new Customer(1L, 1001L, "Maria", new BigDecimal(10000));
         Customer destCustomer = new Customer(2L, 1002L, "Pedro", new BigDecimal(10));
 
@@ -109,7 +110,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void whenTransferringValidateIfNegativeTransferValueReturnNegativeTransferValueException(){
+    void whenTransferringValidateIfNegativeTransferValueReturnNegativeTransferValueException(){
         Customer originCustomer = new Customer(1L, 1001L, "Maria", new BigDecimal(20000));
         Customer destCustomer = new Customer(2L, 1002L, "Pedro", new BigDecimal(100));
 
@@ -126,12 +127,12 @@ public class AccountServiceTest {
     }
 
     @Test
-    public void whenFindTransfersByAccountNumberReturnListTransfer(){
+    void whenFindTransfersByAccountNumberReturnListTransfer(){
         Transfer transferOne = new Transfer(1L,1001L, 1002L, new BigDecimal(1), null, null);
         Transfer transferTwo = new Transfer(2L,1001L, 1002L, new BigDecimal(10), null, null);
         Customer customer = new Customer(1L, 1001L, "Maria", new BigDecimal(20000));
 
-        List<Transfer> listTransfers = new ArrayList<Transfer>();
+        List<Transfer> listTransfers = new ArrayList<>();
         listTransfers.add(transferOne);
         listTransfers.add(transferTwo);
 
@@ -139,15 +140,16 @@ public class AccountServiceTest {
 
         when(customerRepository.findByAccountNumber(customer.getAccountNumber())).thenReturn(Optional.of(customer));
 
-        List<Transfer> listTransfer = accountService.findAllTransfersByAccount(customer.getAccountNumber());
+        accountService.findAllTransfersByAccount(customer.getAccountNumber());
 
         verify(transferRepository, times(1)).findAllByAccount(customer.getAccountNumber());
 
     }
 
     @Test
-    public void whenFindTransfersByAccountNumberThatNotExistReturnNotFoundException(){
+    void whenFindTransfersByAccountNumberThatNotExistReturnNotFoundException(){
         Customer customer = new Customer(1L, 1001L, "Maria", new BigDecimal(10));
-        assertThrows(NotFoundException.class, () -> accountService.findByAccountNumber(customer.getAccountNumber()));
+        Long accountNumber = customer.getAccountNumber();
+        assertThrows(NotFoundException.class, () -> accountService.findByAccountNumber(accountNumber));
     }
 }
