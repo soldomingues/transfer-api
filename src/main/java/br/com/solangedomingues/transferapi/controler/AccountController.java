@@ -34,7 +34,7 @@ public class AccountController {
 
         Response response = new Response(savedCustomer, situation);
 
-        return new ResponseEntity<Response>(response, HttpStatus.OK);
+        return new ResponseEntity<Response>(response, HttpStatus.CREATED);
 
     }
 
@@ -71,7 +71,7 @@ public class AccountController {
 
         Response response = new Response(savedTransaction, situation);
 
-        return new ResponseEntity<Response>(response, HttpStatus.OK);
+        return new ResponseEntity<Response>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/transfers/account/{accountNumber}")

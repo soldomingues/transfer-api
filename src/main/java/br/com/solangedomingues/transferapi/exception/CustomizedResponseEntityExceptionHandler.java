@@ -41,25 +41,25 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
     @ExceptionHandler(NegativeBalanceException.class)
     protected ResponseEntity<Object> handleNegativeBalanceException(NegativeBalanceException ex, WebRequest request) {
-        return new ResponseEntity<>(new Response(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
-                new Date(), request.getDescription(false), null)), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new Response(new Situation(HttpStatus.UNPROCESSABLE_ENTITY.value(), ex.getMessage(),
+                new Date(), request.getDescription(false), null)), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(AccountNumberAlreadyRegisteredException.class)
     protected ResponseEntity<Object> handleAccountNumberAlreadyRegisteredException(AccountNumberAlreadyRegisteredException ex, WebRequest request) {
-        return new ResponseEntity<>(new Response(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
-                new Date(), request.getDescription(false), null)), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new Response(new Situation(HttpStatus.UNPROCESSABLE_ENTITY.value(), ex.getMessage(),
+                new Date(), request.getDescription(false), null)), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(ExceededTransferValueException.class)
     protected ResponseEntity<Object> handleExceededTransferValueException(ExceededTransferValueException ex, WebRequest request) {
-        return new ResponseEntity<>(new Response(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
-                new Date(), request.getDescription(false), null)), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new Response(new Situation(HttpStatus.UNPROCESSABLE_ENTITY.value(), ex.getMessage(),
+                new Date(), request.getDescription(false), null)), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
     @ExceptionHandler(NegativeTransferValueException.class)
     protected ResponseEntity<Object> handleNegativeTransferValueException(NegativeTransferValueException ex, WebRequest request) {
-        return new ResponseEntity<>(new Response(new Situation(HttpStatus.BAD_REQUEST.value(), ex.getMessage(),
-                new Date(), request.getDescription(false), null)), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new Response(new Situation(HttpStatus.UNPROCESSABLE_ENTITY.value(), ex.getMessage(),
+                new Date(), request.getDescription(false), null)), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }

@@ -2,7 +2,7 @@ Feature: Customers can transfer balance between them
 
   Scenario Outline: client makes call to POST /v1/transfers
     When the client calls /v1/transfers with a existing <originAccount> and a existing <destinationAccount> and a positive <value> under thousand
-    Then the client receives status transfer code of 200
+    Then the client receives status transfer code of 201
     And the client receives the registered transfer with the id
 
     Examples:
@@ -14,7 +14,7 @@ Feature: Customers can transfer balance between them
 
   Scenario Outline: client makes call to POST /v1/transfers
     When the client calls /v1/transfers with <originAccount> and <destinationAccount> and a negative <value>
-    Then the client receives status transfer code of 400
+    Then the client receives status transfer code of 422
 
     Examples:
       | originAccount  | destinationAccount  |  value  |
@@ -22,7 +22,7 @@ Feature: Customers can transfer balance between them
 
   Scenario Outline: client makes call to POST /v1/transfers
     When the client calls /v1/transfers with <originAccount> and <destinationAccount> and <value> greater than
-    Then the client receives status transfer code of 400
+    Then the client receives status transfer code of 422
 
     Examples:
       | originAccount  | destinationAccount  |  value  |
@@ -38,7 +38,7 @@ Feature: Customers can transfer balance between them
 
   Scenario Outline: client makes call to POST /v1/transfers
     When the client calls /v1/transfers with <originAccount> negative balance and <destinationAccount> and <value>
-    Then the client receives status transfer code of 400
+    Then the client receives status transfer code of 422
 
     Examples:
       | originAccount  | destinationAccount  |  value  |

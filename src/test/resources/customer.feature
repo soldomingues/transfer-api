@@ -7,7 +7,7 @@ Feature: Customers can be registered and consulted
 
   Scenario Outline: client makes call to POST /v1/customers
     When the client calls /v1/customers with <accountNumber> and <name> and <balance>
-    Then the client receives status code of 200
+    Then the client receives status code of 201
     And the client receives the registered customer with the id
 
     Examples:
@@ -17,7 +17,7 @@ Feature: Customers can be registered and consulted
 
   Scenario Outline: client makes call to POST /v1/customers
     When the client calls /v1/customers with <accountNumber> and <name> and a negative <balance>
-    Then the client receives status code of 400
+    Then the client receives status code of 422
 
     Examples:
       | accountNumber | name      | balance |
@@ -25,7 +25,7 @@ Feature: Customers can be registered and consulted
 
   Scenario Outline: client makes call to POST /v1/customers
     When the client calls /v1/customers with <accountNumber> already exists and <name> and a <balance>
-    Then the client receives status code of 400
+    Then the client receives status code of 422
 
     Examples:
       | accountNumber | name      | balance |
