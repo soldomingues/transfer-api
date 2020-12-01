@@ -3,7 +3,7 @@ package br.com.solangedomingues.transferapi.controler;
 import br.com.solangedomingues.transferapi.entity.Customer;
 import br.com.solangedomingues.transferapi.entity.Transfer;
 import br.com.solangedomingues.transferapi.service.AccountService;
-import br.com.solangedomingues.transferapi.response.*;
+import br.com.solangedomingues.transferapi.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -62,8 +62,8 @@ public class AccountController {
 
     }
 
-    @PostMapping("/transactions")
-    public ResponseEntity<Response> createTransactions(@RequestBody Transfer transfer) {
+    @PostMapping("/transfers")
+    public ResponseEntity<Response> createTransfer(@RequestBody Transfer transfer) {
 
         Optional<Transfer> savedTransaction = accountService.makeTransfer(transfer);
 
@@ -74,8 +74,8 @@ public class AccountController {
         return new ResponseEntity<Response>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/transactions/account/{accountNumber}")
-    public ResponseEntity<Response> retrieveTransactionsByAccountNumber(@PathVariable Long accountNumber) {
+    @GetMapping("/transfers/account/{accountNumber}")
+    public ResponseEntity<Response> retrieveTransfersByAccountNumber(@PathVariable Long accountNumber) {
         List<Transfer> transactionsForAccount = accountService.findAllTransfersByAccount(accountNumber);
 
         Situation situation = new Situation(HttpStatus.OK.value(), "Success", new Date(), null, null);

@@ -1,7 +1,7 @@
 package br.com.solangedomingues.transferapi.exception;
 
-import br.com.solangedomingues.transferapi.response.Response;
-import br.com.solangedomingues.transferapi.response.Situation;
+import br.com.solangedomingues.transferapi.vo.Response;
+import br.com.solangedomingues.transferapi.vo.Situation;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

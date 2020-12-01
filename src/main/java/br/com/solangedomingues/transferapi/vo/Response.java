@@ -1,8 +1,11 @@
-package br.com.solangedomingues.transferapi.response;
+package br.com.solangedomingues.transferapi.vo;
 
+import br.com.solangedomingues.transferapi.entity.Customer;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 public class Response implements Serializable {
 
