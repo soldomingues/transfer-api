@@ -1,7 +1,5 @@
 package br.com.solangedomingues.transferapi.entity;
 
-import io.swagger.v3.oas.annotations.Hidden;
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,11 +17,10 @@ import java.math.BigDecimal;
 @Entity
 public class Customer implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -2514272150996592982L;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Hidden
     private Long id;
 
     @Column(unique = true)
@@ -34,6 +31,7 @@ public class Customer implements Serializable {
     @Size(min = 0, max = 50)
     private String name;
 
+    @NotNull
     private BigDecimal balance;
 
     public void subtractBalance(BigDecimal value) {
@@ -43,4 +41,5 @@ public class Customer implements Serializable {
     public void addBalance(BigDecimal value) {
         this.balance = this.balance.add(value);
     }
+
 }

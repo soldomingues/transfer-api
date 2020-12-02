@@ -1,4 +1,4 @@
-package br.com.solangedomingues.transferapi.response;
+package br.com.solangedomingues.transferapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -10,18 +10,18 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Response implements Serializable {
+public class ResponseDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -3135583686369231502L;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Object result;
 
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Situation situation;
+    private SituationDTO situationDTO;
 
-    public Response(Situation situation) {
-        this.situation = situation;
+    public ResponseDTO(SituationDTO situationDTO) {
+        this.situationDTO = situationDTO;
     }
 
 }

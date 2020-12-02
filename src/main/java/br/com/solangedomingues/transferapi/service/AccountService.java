@@ -1,16 +1,16 @@
 package br.com.solangedomingues.transferapi.service;
 
-import br.com.solangedomingues.transferapi.entity.Customer;
-import br.com.solangedomingues.transferapi.entity.Transfer;
+import br.com.solangedomingues.transferapi.dto.CustomerDTO;
+import br.com.solangedomingues.transferapi.dto.TransferDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface AccountService {
-    Optional<Customer> saveCustomer(Customer customer);
-    List<Customer> findAllCostumers();
-    Optional<Customer> findByAccountNumber(Long accountNumber);
+    Optional<CustomerDTO> saveCustomer(CustomerDTO customerDTO);
+    List<CustomerDTO> findAllCostumers();
+    Optional<CustomerDTO> findByAccountNumber(Long accountNumber);
 
-    Optional<Transfer> makeTransfer(Transfer transfer);
-    List<Transfer> findAllTransfersByAccount(Long accountNumber);
+    Optional<TransferDTO> makeTransfer(TransferDTO transferDTO);
+    List<TransferDTO> findAllTransfersByAccount(Long accountNumber);
 }

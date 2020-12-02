@@ -1,8 +1,6 @@
 package br.com.solangedomingues.transferapi.entity;
 
 import br.com.solangedomingues.transferapi.enums.TransferStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import io.swagger.v3.oas.annotations.Hidden;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,11 +18,10 @@ import java.util.Date;
 @Entity
 public class Transfer implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -3019218051268261784L;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Hidden
     private Long id;
 
     @NotNull
@@ -38,10 +35,8 @@ public class Transfer implements Serializable {
     private BigDecimal value;
 
     @Enumerated(EnumType.STRING)
-    @Hidden
     private TransferStatus status;
 
-    @Hidden
     private Date date;
 
 }

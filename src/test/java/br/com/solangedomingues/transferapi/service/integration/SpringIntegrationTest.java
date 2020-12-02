@@ -6,6 +6,7 @@ import io.cucumber.spring.CucumberContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.boot.web.server.ErrorPage;
 import org.springframework.http.HttpMethod;
 
 import java.io.IOException;
@@ -22,7 +23,9 @@ public class SpringIntegrationTest {
     public RestResponseTest latestResponse;
 
     public void executeGet(String url) throws IOException {
+
         latestResponse = restTemplate.execute(url, HttpMethod.GET, null, response -> new RestResponseTest(response, response.getStatusCode()));
+
     }
 
     public void executePost(String url, Object body) throws IOException {

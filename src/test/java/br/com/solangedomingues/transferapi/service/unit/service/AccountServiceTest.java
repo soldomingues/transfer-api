@@ -1,5 +1,7 @@
 package br.com.solangedomingues.transferapi.service.unit.service;
 
+import br.com.solangedomingues.transferapi.dto.CustomerDTO;
+import br.com.solangedomingues.transferapi.dto.TransferDTO;
 import br.com.solangedomingues.transferapi.entity.Customer;
 import br.com.solangedomingues.transferapi.entity.Transfer;
 import br.com.solangedomingues.transferapi.exception.*;
@@ -34,22 +36,26 @@ class AccountServiceTest {
 
     @Test
     void whenSendNewCustomerWithCorrectDataReturnSavedCustomer(){
-        Customer customer = new Customer(1L, 1001L, "Maria", new BigDecimal(10));
-        accountService.saveCustomer(customer);
-        verify(customerRepository, times(1)).save(customer);
+        CustomerDTO customerDTO = new CustomerDTO(1L, 1001L, "Maria", new BigDecimal(10));
+        Customer customerReturn = new Customer(1L, 1001L, "Maria", new BigDecimal(10));
+        when(customerRepository.save(any(Customer.class))).thenReturn(customerReturn);
+
+        accountService.saveCustomer(customerDTO);
+
+        verify(customerRepository, times(1)).save(any(Customer.class));
     }
 
     @Test
     void whenCreatingCustomerWithBalanceLessThanZeroReturnNegativeBalanceException(){
-        Customer customer = new Customer(1L, 1001L, "Maria", new BigDecimal(-1));
-        assertThrows(NegativeBalanceException.class, () -> accountService.saveCustomer(customer));
+        CustomerDTO customerDTO = new CustomerDTO(1L, 1001L, "Maria", new BigDecimal(-1));
+        assertThrows(NegativeBalanceException.class, () -> accountService.saveCustomer(customerDTO));
     }
 
     @Test
     void whenCreatingCustomerAccountNumberThatAlreadyExistsReturnAccountNumberAlreadyRegisteredException(){
-        Customer customer = new Customer(1L, 1001L, "Maria", new BigDecimal(10));
-        when(customerRepository.findByAccountNumber(customer.getAccountNumber())).thenReturn(Optional.of(customer));
-        assertThrows(AccountNumberAlreadyRegisteredException.class, () -> accountService.saveCustomer(customer));
+        CustomerDTO customerDTO = new CustomerDTO(1L, 1001L, "Maria", new BigDecimal(10));
+        when(customerRepository.findByAccountNumber(customerDTO.getAccountNumber())).thenReturn(Optional.of(customerDTO));
+        assertThrows(AccountNumberAlreadyRegisteredException.class, () -> accountService.saveCustomer(customerDTO));
     }
 
     @Test
@@ -61,7 +67,7 @@ class AccountServiceTest {
 
     @Test
     void whenLookingCustomerByAccountNumberExistingReturnDataCustomer(){
-        Customer customer = new Customer(1L, 1001L, "Maria", new BigDecimal(10));
+        CustomerDTO customer = new CustomerDTO(1L, 1001L, "Maria", new BigDecimal(10));
         when(customerRepository.findByAccountNumber(customer.getAccountNumber())).thenReturn(Optional.of(customer));
         accountService.findByAccountNumber(customer.getAccountNumber());
         verify(customerRepository, times(1)).findByAccountNumber(customer.getAccountNumber());
@@ -75,51 +81,54 @@ class AccountServiceTest {
 
     @Test
     void whenTransferringValidateThatTheBalanceOfTheOriginAccountIsSufficientReturnNegativeBalanceException(){
-        Customer originCustomer = new Customer(1L, 1001L, "Maria", new BigDecimal(10));
-        Customer destCustomer = new Customer(2L, 1002L, "Pedro", new BigDecimal(100));
+        CustomerDTO originCustomerDTO = new CustomerDTO(1L, 1001L, "Maria", new BigDecimal(10));
+        CustomerDTO destCustomerDTO = new CustomerDTO(2L, 1002L, "Pedro", new BigDecimal(100));
 
-        when(customerRepository.findByAccountNumber(originCustomer.getAccountNumber())).thenReturn(Optional.of(originCustomer));
-        when(customerRepository.findByAccountNumber(destCustomer.getAccountNumber())).thenReturn(Optional.of(destCustomer));
+        when(customerRepository.findByAccountNumber(originCustomerDTO.getAccountNumber())).thenReturn(Optional.of(originCustomerDTO));
+        when(customerRepository.findByAccountNumber(destCustomerDTO.getAccountNumber())).thenReturn(Optional.of(destCustomerDTO));
 
-        Transfer transfer = new Transfer(null,1001L, 1002L, new BigDecimal(20), null, null);
+        TransferDTO transferDTO = new TransferDTO(null,1001L, 1002L, new BigDecimal(20), null, null);
 
-        assertThrows(NegativeBalanceException.class, () -> accountService.makeTransfer(transfer));
+        assertThrows(NegativeBalanceException.class, () -> accountService.makeTransfer(transferDTO));
 
     }
 
     @Test
     void whenTransferringValidateIfTheAccountNumberExistsReturnNotFoundException(){
-        Transfer transfer = new Transfer(null,1001L, 1007L, new BigDecimal(20), null, null);
+        TransferDTO transferDTO = new TransferDTO(null,1001L, 1007L, new BigDecimal(20), null, null);
+        CustomerDTO originCustomerDTO = new CustomerDTO(1L, 1001L, "Maria", new BigDecimal(10));
 
-        assertThrows(NotFoundException.class, () -> accountService.makeTransfer(transfer));
+        when(customerRepository.findByAccountNumber(originCustomerDTO.getAccountNumber())).thenReturn(Optional.of(originCustomerDTO));
+
+        assertThrows(NotFoundException.class, () -> accountService.makeTransfer(transferDTO));
 
     }
 
     @Test
     void whenTransferringValidateIfExceededTransferValueReturnExceededTransferValueException(){
-        Customer originCustomer = new Customer(1L, 1001L, "Maria", new BigDecimal(10000));
-        Customer destCustomer = new Customer(2L, 1002L, "Pedro", new BigDecimal(10));
+        CustomerDTO originCustomerDTO = new CustomerDTO(1L, 1001L, "Maria", new BigDecimal(10000));
+        CustomerDTO destCustomerDTO = new CustomerDTO(2L, 1002L, "Pedro", new BigDecimal(10));
 
-        when(customerRepository.findByAccountNumber(originCustomer.getAccountNumber())).thenReturn(Optional.of(originCustomer));
-        when(customerRepository.findByAccountNumber(destCustomer.getAccountNumber())).thenReturn(Optional.of(destCustomer));
+        when(customerRepository.findByAccountNumber(originCustomerDTO.getAccountNumber())).thenReturn(Optional.of(originCustomerDTO));
+        when(customerRepository.findByAccountNumber(destCustomerDTO.getAccountNumber())).thenReturn(Optional.of(destCustomerDTO));
 
-        Transfer transfer = new Transfer(null,1001L, 1002L, new BigDecimal(2000), null, null);
+        TransferDTO transferDTO = new TransferDTO(null,1001L, 1002L, new BigDecimal(2000), null, null);
 
-        assertThrows(ExceededTransferValueException.class, () -> accountService.makeTransfer(transfer));
+        assertThrows(ExceededTransferValueException.class, () -> accountService.makeTransfer(transferDTO));
 
     }
 
     @Test
     void whenTransferringValidateIfNegativeTransferValueReturnNegativeTransferValueException(){
-        Customer originCustomer = new Customer(1L, 1001L, "Maria", new BigDecimal(20000));
-        Customer destCustomer = new Customer(2L, 1002L, "Pedro", new BigDecimal(100));
+        CustomerDTO originCustomerDTO = new CustomerDTO(1L, 1001L, "Maria", new BigDecimal(20000));
+        CustomerDTO destCustomerDTO = new CustomerDTO(2L, 1002L, "Pedro", new BigDecimal(100));
 
-        when(customerRepository.findByAccountNumber(originCustomer.getAccountNumber())).thenReturn(Optional.of(originCustomer));
-        when(customerRepository.findByAccountNumber(destCustomer.getAccountNumber())).thenReturn(Optional.of(destCustomer));
+        when(customerRepository.findByAccountNumber(originCustomerDTO.getAccountNumber())).thenReturn(Optional.of(originCustomerDTO));
+        when(customerRepository.findByAccountNumber(destCustomerDTO.getAccountNumber())).thenReturn(Optional.of(destCustomerDTO));
 
-        Transfer transferNegative = new Transfer(null,1001L, 1002L, new BigDecimal(-1), null, null);
+        TransferDTO transferNegative = new TransferDTO(null,1001L, 1002L, new BigDecimal(-1), null, null);
 
-        Transfer transferZero = new Transfer(null,1001L, 1002L, new BigDecimal(0), null, null);
+        TransferDTO transferZero = new TransferDTO(null,1001L, 1002L, new BigDecimal(0), null, null);
 
         assertThrows(NegativeTransferValueException.class, () -> accountService.makeTransfer(transferNegative));
         assertThrows(NegativeTransferValueException.class, () -> accountService.makeTransfer(transferZero));
@@ -130,19 +139,19 @@ class AccountServiceTest {
     void whenFindTransfersByAccountNumberReturnListTransfer(){
         Transfer transferOne = new Transfer(1L,1001L, 1002L, new BigDecimal(1), null, null);
         Transfer transferTwo = new Transfer(2L,1001L, 1002L, new BigDecimal(10), null, null);
-        Customer customer = new Customer(1L, 1001L, "Maria", new BigDecimal(20000));
+        CustomerDTO customerDTO = new CustomerDTO(1L, 1001L, "Maria", new BigDecimal(20000));
 
         List<Transfer> listTransfers = new ArrayList<>();
         listTransfers.add(transferOne);
         listTransfers.add(transferTwo);
 
-        when(transferRepository.findAllByAccount(customer.getAccountNumber())).thenReturn(listTransfers);
+        when(transferRepository.findAllByAccount(customerDTO.getAccountNumber())).thenReturn(listTransfers);
 
-        when(customerRepository.findByAccountNumber(customer.getAccountNumber())).thenReturn(Optional.of(customer));
+        when(customerRepository.findByAccountNumber(customerDTO.getAccountNumber())).thenReturn(Optional.of(customerDTO));
 
-        accountService.findAllTransfersByAccount(customer.getAccountNumber());
+        accountService.findAllTransfersByAccount(customerDTO.getAccountNumber());
 
-        verify(transferRepository, times(1)).findAllByAccount(customer.getAccountNumber());
+        verify(transferRepository, times(1)).findAllByAccount(customerDTO.getAccountNumber());
 
     }
 

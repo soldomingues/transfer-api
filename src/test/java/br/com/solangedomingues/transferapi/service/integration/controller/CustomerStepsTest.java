@@ -5,6 +5,8 @@ import br.com.solangedomingues.transferapi.service.integration.SpringIntegration
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
@@ -16,6 +18,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 public class CustomerStepsTest extends SpringIntegrationTest {
+
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     @Autowired
@@ -33,7 +36,7 @@ public class CustomerStepsTest extends SpringIntegrationTest {
     }
     @Then("the client receives a list with all customers")
     public void the_client_receives_a_list_with_all_customers() {
-        assertThat("customer list not present", latestResponse.getResponse().getResult() != null);
+        assertThat("customer list not present", latestResponse.getResponseDTO().getResult() != null);
     }
 
     @When("the client calls \\/v1\\/customers with {long} and {string} and {bigdecimal}")
@@ -44,7 +47,7 @@ public class CustomerStepsTest extends SpringIntegrationTest {
 
     @Then("the client receives the registered customer with the id")
     public void the_client_receives_the_registered_customer_with_the_id() {
-        Customer resultCustomer = MAPPER.convertValue(latestResponse.getResponse().getResult(), Customer.class);
+        Customer resultCustomer = MAPPER.convertValue(latestResponse.getResponseDTO().getResult(), Customer.class);
         assertThat("customer id must not be null", !Objects.isNull(resultCustomer.getId()));
     }
 
@@ -68,7 +71,7 @@ public class CustomerStepsTest extends SpringIntegrationTest {
 
     @Then("the client receives body customer")
     public void the_client_receives_body_customer() {
-        assertThat("customer not present", latestResponse.getResponse().getResult() != null);
+        assertThat("customer not present", latestResponse.getResponseDTO().getResult() != null);
     }
 
 

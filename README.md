@@ -39,7 +39,7 @@ curl -X GET "http://localhost:8080/v1/customers"
       "balance": 20000
     }
   ],
-  "situation": {
+  "situationDTO": {
     "date": "2020-12-01T23:38:13.247+00:00",
     "codigo": 200,
     "message": "found the customers"
@@ -69,7 +69,7 @@ curl -X POST "http://localhost:8080/v1/customers"
     "name": "Luiz",
     "balance": 100
   },
-  "situation": {
+  "situationDTO": {
     "date": "2020-12-01T23:41:45.956+00:00",
     "codigo": 201,
     "message": "registered customer"
@@ -91,7 +91,7 @@ curl -X POST "http://localhost:8080/v1/customers"
 ```  
 ```json
 {
-  "situation": {
+  "situationDTO": {
     "date": "2020-12-01T23:50:16.148+00:00",
     "uri": "uri=/v1/customers",
     "codigo": 422,
@@ -115,7 +115,7 @@ curl -X POST "http://localhost:8080/v1/customers"
 
 ```json
 {
-  "situation": {
+  "situationDTO": {
     "date": "2020-12-01T23:54:00.393+00:00",
     "uri": "uri=/v1/customers",
     "codigo": 422,
@@ -144,7 +144,7 @@ curl -X GET "http://localhost:8080/v1/customers/account/1001"
     "name": "Maria",
     "balance": 10000
   },
-  "situation": {
+  "situationDTO": {
     "date": "2020-12-01T23:56:39.282+00:00",
     "codigo": 200,
     "message": "found the customer"
@@ -165,7 +165,7 @@ curl -X GET "http://localhost:8080/v1/customers/account/777"
 
 ```json
 {
-  "situation": {
+  "situationDTO": {
     "date": "2020-12-01T23:57:27.084+00:00",
     "uri": "uri=/v1/customers/account/777",
     "codigo": 404,
@@ -199,7 +199,7 @@ curl -X POST "http://localhost:8080/v1/transfers"
     "status": "SUCCESS",
     "date": "2020-12-01T23:59:04.442+00:00"
   },
-  "situation": {
+  "situationDTO": {
     "date": "2020-12-01T23:59:04.494+00:00",
     "codigo": 201,
     "message": "registered transfer"
@@ -222,7 +222,7 @@ curl -X POST "http://localhost:8080/v1/transfers"
 
 ```json
 {
-  "situation": {
+  "situationDTO": {
     "date": "2020-12-02T00:01:23.145+00:00",
     "uri": "uri=/v1/transfers",
     "codigo": 404,
@@ -246,7 +246,7 @@ curl -X POST "http://localhost:8080/v1/transfers"
 
 ```json
 {
-  "situation": {
+  "situationDTO": {
     "date": "2020-12-02T00:03:10.961+00:00",
     "uri": "uri=/v1/transfers",
     "codigo": 422,
@@ -270,7 +270,7 @@ curl -X POST "http://localhost:8080/v1/transfers"
 
 ```json
 {
-  "situation": {
+  "situationDTO": {
     "date": "2020-12-02T00:04:12.222+00:00",
     "uri": "uri=/v1/transfers",
     "codigo": 422,
@@ -294,7 +294,7 @@ curl -X POST "http://localhost:8080/v1/transfers"
 
 ```json
 {
-  "situation": {
+  "situationDTO": {
     "date": "2020-12-02T00:07:07.109+00:00",
     "uri": "uri=/v1/transfers",
     "codigo": 422,
@@ -383,7 +383,7 @@ curl -X GET "http://localhost:8080/v1/transfers/account/1001"
       "date": "2020-11-22T10:00:00.000+00:00"
     }
   ],
-  "situation": {
+  "situationDTO": {
     "date": "2020-12-02T00:08:18.284+00:00",
     "codigo": 200,
     "message": "found the transfers"

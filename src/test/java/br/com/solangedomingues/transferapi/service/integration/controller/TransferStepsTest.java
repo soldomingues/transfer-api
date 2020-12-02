@@ -1,6 +1,5 @@
 package br.com.solangedomingues.transferapi.service.integration.controller;
 
-import br.com.solangedomingues.transferapi.entity.Customer;
 import br.com.solangedomingues.transferapi.entity.Transfer;
 import br.com.solangedomingues.transferapi.service.integration.SpringIntegrationTest;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,7 +35,7 @@ public class TransferStepsTest extends SpringIntegrationTest {
 
     @Then("the client receives the registered transfer with the id")
     public void the_client_receives_the_registered_transfer_with_the_id() {
-        Transfer resultTransfer = MAPPER.convertValue(latestResponse.getResponse().getResult(), Transfer.class);
+        Transfer resultTransfer = MAPPER.convertValue(latestResponse.getResponseDTO().getResult(), Transfer.class);
         assertThat("customer id must not be null", !Objects.isNull(resultTransfer.getId()));
     }
 
@@ -72,7 +71,7 @@ public class TransferStepsTest extends SpringIntegrationTest {
 
     @Then("the client receives transfers list")
     public void the_client_receives_transfers_list() {
-        assertThat("transfers not present", latestResponse.getResponse().getResult() != null);
+        assertThat("transfers not present", latestResponse.getResponseDTO().getResult() != null);
     }
 
 

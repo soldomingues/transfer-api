@@ -1,19 +1,21 @@
-package br.com.solangedomingues.transferapi.response;
+package br.com.solangedomingues.transferapi.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Situation {
+public class SituationDTO implements Serializable {
+
+    private static final long serialVersionUID = -7866005255111594208L;
 
     @JsonProperty("codigo")
     private int codeMessage;

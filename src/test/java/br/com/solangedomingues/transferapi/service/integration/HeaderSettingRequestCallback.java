@@ -8,6 +8,7 @@ import org.springframework.web.client.RequestCallback;
 import java.io.IOException;
 
 public class HeaderSettingRequestCallback implements RequestCallback {
+
     private String body;
 
     public HeaderSettingRequestCallback(final String postBody) {
