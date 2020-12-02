@@ -176,7 +176,8 @@ curl -X GET "http://localhost:8080/v1/customers/account/777"
 ----
 ```
 Scenario: client makes call to POST /v1/transfers
-    When the client calls /v1/transfers with a existing <originAccount> and a existing <destinationAccount> and a positive <value> under thousand
+    When the client calls /v1/transfers with a existing <originAccount> and a existing <destinationAccount> and 
+    a positive <value> under thousand
     Then the client receives status transfer code of 201
     And the client receives the registered transfer with the id
 ```
