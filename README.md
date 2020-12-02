@@ -12,14 +12,15 @@ Documentation available at: http://localhost:8080/swagger-iu.html
 Request Examples:
 
 ```
-  Scenario: client makes call to GET /v1/customers
+Scenario: client makes call to GET /v1/customers
     When the client calls /v1/customers
     Then the client receives status code of 200
     And the client receives a list with all customers
 ```
 
 ```json
-curl -X GET "http://localhost:8080/v1/customers" -H  "accept: application/json"
+curl -X GET "http://localhost:8080/v1/customers" 
+     -H  "accept: application/json"
 ```
 
 ```json
@@ -47,14 +48,17 @@ curl -X GET "http://localhost:8080/v1/customers" -H  "accept: application/json"
 ```
 ----
 ```
-  Scenario: client makes call to POST /v1/customers
+Scenario: client makes call to POST /v1/customers
     When the client calls /v1/customers with <accountNumber> and <name> and <balance>
     Then the client receives status code of 201
     And the client receives the registered customer with the id
 ```
 
 ```json
-curl -X POST "http://localhost:8080/v1/customers" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"accountNumber\":207,\"name\":\"Luiz\",\"balance\":100}"
+curl -X POST "http://localhost:8080/v1/customers" 
+     -H  "accept: application/json" 
+     -H  "Content-Type: application/json" 
+     -d "{\"accountNumber\":207,\"name\":\"Luiz\",\"balance\":100}"
 ```
 
 ```json
