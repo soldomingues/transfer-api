@@ -12,14 +12,15 @@ Documentation available at: http://localhost:8080/swagger-iu.html
 Request Examples:
 
 ```
-  Scenario: client makes call to GET /v1/customers
+Scenario: client makes call to GET /v1/customers
     When the client calls /v1/customers
     Then the client receives status code of 200
     And the client receives a list with all customers
 ```
 
 ```json
-curl -X GET "http://localhost:8080/v1/customers" -H  "accept: application/json"
+curl -X GET "http://localhost:8080/v1/customers" 
+     -H  "accept: application/json"
 ```
 
 ```json
@@ -47,14 +48,17 @@ curl -X GET "http://localhost:8080/v1/customers" -H  "accept: application/json"
 ```
 ----
 ```
-  Scenario: client makes call to POST /v1/customers
+Scenario: client makes call to POST /v1/customers
     When the client calls /v1/customers with <accountNumber> and <name> and <balance>
     Then the client receives status code of 201
     And the client receives the registered customer with the id
 ```
 
 ```json
-curl -X POST "http://localhost:8080/v1/customers" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"accountNumber\":207,\"name\":\"Luiz\",\"balance\":100}"
+curl -X POST "http://localhost:8080/v1/customers" 
+     -H  "accept: application/json" 
+     -H  "Content-Type: application/json" 
+     -d "{\"accountNumber\":207,\"name\":\"Luiz\",\"balance\":100}"
 ```
 
 ```json
@@ -74,13 +78,16 @@ curl -X POST "http://localhost:8080/v1/customers" -H  "accept: application/json"
 ```  
 ----
 ```
-  Scenario: client makes call to POST /v1/customers
+Scenario: client makes call to POST /v1/customers
     When the client calls /v1/customers with <accountNumber> and <name> and a negative <balance>
     Then the client receives status code of 422
 ```
 
 ```json
-curl -X POST "http://localhost:8080/v1/customers" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"accountNumber\":1009,\"name\":\"Victor\",\"balance\":-1}"
+curl -X POST "http://localhost:8080/v1/customers" 
+     -H  "accept: application/json" 
+     -H  "Content-Type: application/json" 
+     -d "{\"accountNumber\":1009,\"name\":\"Victor\",\"balance\":-1}"
 ```  
 ```json
 {
@@ -94,13 +101,16 @@ curl -X POST "http://localhost:8080/v1/customers" -H  "accept: application/json"
 ```  
 ----
 ```
-  Scenario: client makes call to POST /v1/customers
+Scenario: client makes call to POST /v1/customers
     When the client calls /v1/customers with <accountNumber> already exists and <name> and a <balance>
     Then the client receives status code of 422
 ```  
 
 ```json
-curl -X POST "http://localhost:8080/v1/customers" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"accountNumber\":1001,\"name\":\"Vanessa\",\"balance\":1000}"
+curl -X POST "http://localhost:8080/v1/customers" 
+     -H  "accept: application/json" 
+     -H  "Content-Type: application/json" 
+     -d "{\"accountNumber\":1001,\"name\":\"Vanessa\",\"balance\":1000}"
 ```  
 
 ```json
@@ -115,14 +125,15 @@ curl -X POST "http://localhost:8080/v1/customers" -H  "accept: application/json"
 ```
 ----
 ```
-  Scenario: client makes call to GET /v1/customers/account
+Scenario: client makes call to GET /v1/customers/account
     When the client calls /v1/customers/account with <accountNumber>
     Then the client receives status code of 200
     And the client receives body customer
 ```
     
 ```json
-curl -X GET "http://localhost:8080/v1/customers/account/1001" -H  "accept: application/json"
+curl -X GET "http://localhost:8080/v1/customers/account/1001" 
+     -H  "accept: application/json"
 ```
 
 ```json
@@ -142,13 +153,14 @@ curl -X GET "http://localhost:8080/v1/customers/account/1001" -H  "accept: appli
 ```
 ----
 ```
-  Scenario: client makes call to GET /v1/customers/account
+Scenario: client makes call to GET /v1/customers/account
     When the client calls /v1/customers/account with <accountNumber>
     Then the client receives status code of 404
 ```
 
 ```json
-curl -X GET "http://localhost:8080/v1/customers/account/777" -H  "accept: application/json"
+curl -X GET "http://localhost:8080/v1/customers/account/777" 
+     -H  "accept: application/json"
 ```
 
 ```json
@@ -163,14 +175,18 @@ curl -X GET "http://localhost:8080/v1/customers/account/777" -H  "accept: applic
 ```
 ----
 ```
-  Scenario: client makes call to POST /v1/transfers
-    When the client calls /v1/transfers with a existing <originAccount> and a existing <destinationAccount> and a positive <value> under thousand
+Scenario: client makes call to POST /v1/transfers
+    When the client calls /v1/transfers with a existing <originAccount> and a existing <destinationAccount> and 
+    a positive <value> under thousand
     Then the client receives status transfer code of 201
     And the client receives the registered transfer with the id
 ```
    
 ```json
-curl -X POST "http://localhost:8080/v1/transfers" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"originAccount\":1001,\"destinationAccount\":1002,\"value\":700}"
+curl -X POST "http://localhost:8080/v1/transfers" 
+     -H  "accept: application/json" 
+     -H  "Content-Type: application/json" 
+     -d "{\"originAccount\":1001,\"destinationAccount\":1002,\"value\":700}"
 ```
 
 ```json
@@ -192,13 +208,16 @@ curl -X POST "http://localhost:8080/v1/transfers" -H  "accept: application/json"
 ```
 ----
 ```
-  Scenario: client makes call to POST /v1/transfers
+Scenario: client makes call to POST /v1/transfers
     When the client calls /v1/transfers with <originAccount> or <destinationAccount> not existing and <value>
     Then the client receives status transfer code of 404
 ```
 
 ```json
-curl -X POST "http://localhost:8080/v1/transfers" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"originAccount\":777,\"destinationAccount\":1002,\"value\":700}"
+curl -X POST "http://localhost:8080/v1/transfers" 
+     -H  "accept: application/json" 
+     -H  "Content-Type: application/json" 
+     -d "{\"originAccount\":777,\"destinationAccount\":1002,\"value\":700}"
 ```
 
 ```json
@@ -213,13 +232,16 @@ curl -X POST "http://localhost:8080/v1/transfers" -H  "accept: application/json"
 ```
 ----
 ```
-  Scenario: client makes call to POST /v1/transfers
+Scenario: client makes call to POST /v1/transfers
     When the client calls /v1/transfers with <originAccount> negative balance and <destinationAccount> and <value>
     Then the client receives status transfer code of 422
 ```
     
 ```json
-curl -X POST "http://localhost:8080/v1/transfers" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"originAccount\":1007,\"destinationAccount\":1001,\"value\":700}"
+curl -X POST "http://localhost:8080/v1/transfers" 
+     -H  "accept: application/json" 
+     -H  "Content-Type: application/json" 
+     -d "{\"originAccount\":1007,\"destinationAccount\":1001,\"value\":700}"
 ```
 
 ```json
@@ -234,13 +256,16 @@ curl -X POST "http://localhost:8080/v1/transfers" -H  "accept: application/json"
 ```
 ----
 ```
-  Scenario: client makes call to POST /v1/transfers
+Scenario: client makes call to POST /v1/transfers
     When the client calls /v1/transfers with <originAccount> and <destinationAccount> and a negative <value>
     Then the client receives status transfer code of 422
 ```
 
 ```json
-curl -X POST "http://localhost:8080/v1/transfers" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"originAccount\":1007,\"destinationAccount\":1001,\"value\":-4}"
+curl -X POST "http://localhost:8080/v1/transfers" 
+     -H  "accept: application/json" 
+     -H  "Content-Type: application/json" 
+     -d "{\"originAccount\":1007,\"destinationAccount\":1001,\"value\":-4}"
 ```
 
 ```json
@@ -255,13 +280,16 @@ curl -X POST "http://localhost:8080/v1/transfers" -H  "accept: application/json"
 ```
 ----
 ```
-  Scenario: client makes call to POST /v1/transfers
+Scenario: client makes call to POST /v1/transfers
     When the client calls /v1/transfers with <originAccount> and <destinationAccount> and <value> greater than
     Then the client receives status transfer code of 422
 ```
     
 ```json
-curl -X POST "http://localhost:8080/v1/transfers" -H  "accept: application/json" -H  "Content-Type: application/json" -d "{\"originAccount\":1001,\"destinationAccount\":1002,\"value\":1200}"
+curl -X POST "http://localhost:8080/v1/transfers" 
+     -H  "accept: application/json" 
+     -H  "Content-Type: application/json" 
+     -d "{\"originAccount\":1001,\"destinationAccount\":1002,\"value\":1200}"
 ```
 
 ```json
@@ -276,14 +304,15 @@ curl -X POST "http://localhost:8080/v1/transfers" -H  "accept: application/json"
 ```
 ----
 ```
-  Scenario: client makes call to GET /v1/transfers/account
+Scenario: client makes call to GET /v1/transfers/account
     When the client calls /v1/transfers/account with a existing <accountNumber>
     Then the client receives status transfer code of 200
     And the client receives transfers list
 ```
     
 ```json
-curl -X GET "http://localhost:8080/v1/transfers/account/1001" -H  "accept: application/json"
+curl -X GET "http://localhost:8080/v1/transfers/account/1001" 
+     -H  "accept: application/json"
 ```
 
 ```json
