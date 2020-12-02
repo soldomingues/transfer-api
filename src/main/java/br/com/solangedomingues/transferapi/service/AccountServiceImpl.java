@@ -29,10 +29,10 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Optional<Customer> saveCustomer(Customer customer) {
         if(customer.getBalance().compareTo(new BigDecimal(0))<0){
-            throw new NegativeBalanceException("Balance cannot start negative");
+            throw new NegativeBalanceException("balance cannot start negative");
         }
         if(!customerRepository.findByAccountNumber(customer.getAccountNumber()).isEmpty()){
-            throw new AccountNumberAlreadyRegisteredException("Account number already registered");
+            throw new AccountNumberAlreadyRegisteredException("account number already registered");
         }
         return Optional.ofNullable(customerRepository.save(customer));
     }
@@ -42,7 +42,7 @@ public class AccountServiceImpl implements AccountService {
 
         Optional<Customer> customer = customerRepository.findByAccountNumber(accountNumber);
         if (customer.isEmpty()) {
-            throw new NotFoundException("Account Not Found");
+            throw new NotFoundException("account not found");
         }
         return customer;
     }
@@ -78,7 +78,7 @@ public class AccountServiceImpl implements AccountService {
 
         Optional<Customer> customer = customerRepository.findByAccountNumber(accountNumber);
         if (customer.isEmpty()) {
-            throw new NotFoundException("Account Not Found");
+            throw new NotFoundException("account not found");
         }
         return transferRepository.findAllByAccount(accountNumber);
     }
@@ -88,28 +88,28 @@ public class AccountServiceImpl implements AccountService {
             transfer.setStatus(TransferStatus.ACCOUNT_NOT_EXISTS);
             transfer.setDate(new Date());
             transferRepository.save(transfer);
-            throw new NotFoundException("Account not registered");
+            throw new NotFoundException("account not found");
         }
 
         if (originCustomer.getBalance().compareTo(transfer.getValue()) < 0) {
             transfer.setStatus(TransferStatus.INSUFFICIENT_BALANCE);
             transfer.setDate(new Date());
             transferRepository.save(transfer);
-            throw new NegativeBalanceException("Insufficient Balance");
+            throw new NegativeBalanceException("insufficient balance");
         }
 
         if (transfer.getValue().compareTo(new BigDecimal(1000)) > 0) {
             transfer.setStatus(TransferStatus.EXCEEDED_TRANSFER_VALUE);
             transfer.setDate(new Date());
             transferRepository.save(transfer);
-            throw new ExceededTransferValueException("Exceeded Transfer Value");
+            throw new ExceededTransferValueException("exceeded transfer value");
         }
 
         if (transfer.getValue().compareTo(new BigDecimal(0))  <= 0) {
             transfer.setStatus(TransferStatus.NEGATIVE_TRANSFER_VALUE);
             transfer.setDate(new Date());
             transferRepository.save(transfer);
-            throw new NegativeTransferValueException("Value cannot be less than or equal to zero");
+            throw new NegativeTransferValueException("value cannot be less than or equal to zero");
         }
     }
 }

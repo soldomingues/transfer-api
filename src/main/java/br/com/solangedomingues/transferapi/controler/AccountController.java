@@ -41,15 +41,17 @@ public class AccountController {
 
     @Operation(summary = "Create Customer")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Registered Customer",
+            @ApiResponse(responseCode = "201", description = "registered customer",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class)) }),
-            @ApiResponse(responseCode = "400", description = "Invalid Data", content = @Content)})
+            @ApiResponse(responseCode = "400", description = "invalid data", content = @Content),
+            @ApiResponse(responseCode = "422", description = "balance cannot start negative", content = @Content)
+    })
     @PostMapping("/customers")
-    public ResponseEntity<Response> createCustomer(@Parameter(description = "Customer Object to be Created") @RequestBody Customer customer) {
+    public ResponseEntity<Response> createCustomer(@Parameter(description = "customer object to be created") @RequestBody Customer customer) {
 
         Optional<Customer> savedCustomer = accountService.saveCustomer(customer);
 
-        Situation situation = new Situation(HttpStatus.CREATED.value(), "Success", new Date(), null, null);
+        Situation situation = new Situation(HttpStatus.CREATED.value(), "success", new Date(), null, null);
 
         Response response = new Response(savedCustomer, situation);
 
@@ -59,14 +61,14 @@ public class AccountController {
 
     @Operation(summary = "Retrieve All Registered Customers")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the Customers",
+            @ApiResponse(responseCode = "200", description = "found the customers",
                     content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Customer.class))) })})
     @GetMapping("/customers")
     public ResponseEntity<Response> retrieveAllRegisteredCustomers() {
 
         List<Customer> listCostumers = accountService.findAllCostumers();
 
-        Situation situation = new Situation(HttpStatus.OK.value(), "Success", new Date(), null, null);
+        Situation situation = new Situation(HttpStatus.OK.value(), "success", new Date(), null, null);
 
         Response response = new Response(listCostumers, situation);
 
@@ -75,16 +77,16 @@ public class AccountController {
 
     @Operation(summary = "Retrieve Customer By Account Number")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the Customer",
+            @ApiResponse(responseCode = "200", description = "found the customer",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Customer.class)) }),
-            @ApiResponse(responseCode = "400", description = "Invalid accountNumber Supplied", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Customer Not Found", content = @Content) })
+            @ApiResponse(responseCode = "400", description = "invalid accountNumber supplied", content = @Content),
+            @ApiResponse(responseCode = "404", description = "customer not found", content = @Content) })
     @GetMapping("/customers/account/{accountNumber}")
-    public ResponseEntity<Response> retrieveCustomerByAccountNumber(@Parameter(description = "Account Number to be Searched")
+    public ResponseEntity<Response> retrieveCustomerByAccountNumber(@Parameter(description = "account number to be searched")
                                                                         @PathVariable Long accountNumber, @RequestHeader HttpHeaders headers) {
         Optional<Customer> customer = accountService.findByAccountNumber(accountNumber);
 
-        Situation situation = new Situation(HttpStatus.OK.value(), "Success", new Date(), null, null);
+        Situation situation = new Situation(HttpStatus.OK.value(), "success", new Date(), null, null);
 
         Response response = new Response(customer, situation);
 
@@ -94,16 +96,18 @@ public class AccountController {
 
     @Operation(summary = "Create Transfer")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Registered Transfer",
+            @ApiResponse(responseCode = "201", description = "registered transfer",
                     content = { @Content(mediaType = "application/json", schema = @Schema(implementation = Transfer.class)) }),
-            @ApiResponse(responseCode = "400", description = "Invalid Data", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Customer Not Found", content = @Content) })
+            @ApiResponse(responseCode = "400", description = "invalid data", content = @Content),
+            @ApiResponse(responseCode = "404", description = "customer not found", content = @Content),
+            @ApiResponse(responseCode = "422", description = "balance cannot start negative", content = @Content)
+    })
     @PostMapping("/transfers")
-    public ResponseEntity<Response> createTransfer(@Parameter(description = "Transfer Object to be Created") @RequestBody Transfer transfer) {
+    public ResponseEntity<Response> createTransfer(@Parameter(description = "transfer object to be created") @RequestBody Transfer transfer) {
 
         Optional<Transfer> savedTransaction = accountService.makeTransfer(transfer);
 
-        Situation situation = new Situation(HttpStatus.CREATED.value(), "Success", new Date(), null, null);
+        Situation situation = new Situation(HttpStatus.CREATED.value(), "success", new Date(), null, null);
 
         Response response = new Response(savedTransaction, situation);
 
@@ -112,15 +116,15 @@ public class AccountController {
 
     @Operation(summary = "Retrieve Transfers By Account Number")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Found the Transfers",
+            @ApiResponse(responseCode = "200", description = "found the transfers",
                     content = { @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Transfer.class))) }),
-            @ApiResponse(responseCode = "400", description = "Invalid accountNumber Supplied", content = @Content),
-            @ApiResponse(responseCode = "404", description = "Customer not found", content = @Content) })
+            @ApiResponse(responseCode = "400", description = "invalid accountNumber supplied", content = @Content),
+            @ApiResponse(responseCode = "404", description = "customer not found", content = @Content) })
     @GetMapping("/transfers/account/{accountNumber}")
-    public ResponseEntity<Response> retrieveTransfersByAccountNumber(@Parameter(description = "Account Number to be searched for transfers") @PathVariable Long accountNumber) {
+    public ResponseEntity<Response> retrieveTransfersByAccountNumber(@Parameter(description = "account number to be searched for transfers") @PathVariable Long accountNumber) {
         List<Transfer> transactionsForAccount = accountService.findAllTransfersByAccount(accountNumber);
 
-        Situation situation = new Situation(HttpStatus.OK.value(), "Success", new Date(), null, null);
+        Situation situation = new Situation(HttpStatus.OK.value(), "success", new Date(), null, null);
 
         Response response = new Response(transactionsForAccount, situation);
 
