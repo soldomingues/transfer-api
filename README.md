@@ -7,7 +7,7 @@ Macro Architecture:
 ![Architecture](/img/arq.png)
 
 
-Documentation available at: http://localhost:8080/swagger-iu.html
+Documentation available at: http://localhost:8080/swagger-transfer-api.html
 
 Request Examples:
 
