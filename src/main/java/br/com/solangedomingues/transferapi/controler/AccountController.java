@@ -4,11 +4,8 @@ import br.com.solangedomingues.transferapi.entity.Customer;
 import br.com.solangedomingues.transferapi.entity.Transfer;
 import br.com.solangedomingues.transferapi.service.AccountService;
 import br.com.solangedomingues.transferapi.response.*;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.info.Contact;
-import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -51,7 +48,7 @@ public class AccountController {
 
         Optional<Customer> savedCustomer = accountService.saveCustomer(customer);
 
-        Situation situation = new Situation(HttpStatus.CREATED.value(), "success", new Date(), null, null);
+        Situation situation = new Situation(HttpStatus.CREATED.value(), "registered customer", new Date(), null, null);
 
         Response response = new Response(savedCustomer, situation);
 
@@ -68,7 +65,7 @@ public class AccountController {
 
         List<Customer> listCostumers = accountService.findAllCostumers();
 
-        Situation situation = new Situation(HttpStatus.OK.value(), "success", new Date(), null, null);
+        Situation situation = new Situation(HttpStatus.OK.value(), "found the customers", new Date(), null, null);
 
         Response response = new Response(listCostumers, situation);
 
@@ -86,7 +83,7 @@ public class AccountController {
                                                                         @PathVariable Long accountNumber, @RequestHeader HttpHeaders headers) {
         Optional<Customer> customer = accountService.findByAccountNumber(accountNumber);
 
-        Situation situation = new Situation(HttpStatus.OK.value(), "success", new Date(), null, null);
+        Situation situation = new Situation(HttpStatus.OK.value(), "found the customer", new Date(), null, null);
 
         Response response = new Response(customer, situation);
 
@@ -107,7 +104,7 @@ public class AccountController {
 
         Optional<Transfer> savedTransaction = accountService.makeTransfer(transfer);
 
-        Situation situation = new Situation(HttpStatus.CREATED.value(), "success", new Date(), null, null);
+        Situation situation = new Situation(HttpStatus.CREATED.value(), "registered transfer", new Date(), null, null);
 
         Response response = new Response(savedTransaction, situation);
 
@@ -124,7 +121,7 @@ public class AccountController {
     public ResponseEntity<Response> retrieveTransfersByAccountNumber(@Parameter(description = "account number to be searched for transfers") @PathVariable Long accountNumber) {
         List<Transfer> transactionsForAccount = accountService.findAllTransfersByAccount(accountNumber);
 
-        Situation situation = new Situation(HttpStatus.OK.value(), "success", new Date(), null, null);
+        Situation situation = new Situation(HttpStatus.OK.value(), "found the transfers", new Date(), null, null);
 
         Response response = new Response(transactionsForAccount, situation);
 

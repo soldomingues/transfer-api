@@ -41,7 +41,7 @@ curl -X GET "http://localhost:8080/v1/customers" -H  "accept: application/json"
   "situation": {
     "date": "2020-12-01T23:38:13.247+00:00",
     "codigo": 200,
-    "message": "success"
+    "message": "found the customers"
   }
 }
 ```
@@ -68,7 +68,7 @@ curl -X POST "http://localhost:8080/v1/customers" -H  "accept: application/json"
   "situation": {
     "date": "2020-12-01T23:41:45.956+00:00",
     "codigo": 201,
-    "message": "success"
+    "message": "registered customer"
   }
 }
 ```  
@@ -136,7 +136,7 @@ curl -X GET "http://localhost:8080/v1/customers/account/1001" -H  "accept: appli
   "situation": {
     "date": "2020-12-01T23:56:39.282+00:00",
     "codigo": 200,
-    "message": "success"
+    "message": "found the customer"
   }
 }
 ```
@@ -186,7 +186,7 @@ curl -X POST "http://localhost:8080/v1/transfers" -H  "accept: application/json"
   "situation": {
     "date": "2020-12-01T23:59:04.494+00:00",
     "codigo": 201,
-    "message": "success"
+    "message": "registered transfer"
   }
 }
 ```
@@ -357,7 +357,7 @@ curl -X GET "http://localhost:8080/v1/transfers/account/1001" -H  "accept: appli
   "situation": {
     "date": "2020-12-02T00:08:18.284+00:00",
     "codigo": 200,
-    "message": "success"
+    "message": "found the transfers"
   }
 }
 ```
