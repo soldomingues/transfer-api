@@ -4,7 +4,7 @@ API that allows the registration of new accounts and the transfer between them.
 
 Macro Architecture:
 
-![Architecture](/images/arq.png)
+![Architecture](/img/arq.png)
 
 
 Documentation available at: http://localhost:8080/swagger-iu.html
@@ -12,10 +12,12 @@ Documentation available at: http://localhost:8080/swagger-iu.html
 Request Examples:
 
 ```
+<div class="bg-yellow mb-2">
   Scenario: client makes call to GET /v1/customers
     When the client calls /v1/customers
     Then the client receives status code of 200
     And the client receives a list with all customers
+</div>
 ```
 
 ```json
